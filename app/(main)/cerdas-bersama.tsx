@@ -18,12 +18,13 @@ export default function CerdasBersamaScreen() {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
 
-  if (!isAuthenticated) {
-    router.replace("/login");
-    return;
-  }
+  
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace("/login");
+      return;
+    }
     getQuiz({ client: authAxiosInstance }).then((res) => {
       if (res.error) {
         console.error(res.error);
