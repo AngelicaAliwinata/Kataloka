@@ -1,38 +1,72 @@
-import { Image, TextInput, View, Text, Pressable, Modal } from "react-native";
+import {
+  Image,
+  TextInput,
+  View,
+  Text,
+  Pressable,
+  Modal,
+  Alert,
+} from "react-native";
 import ProfileIcon from "@/assets/images/profil.png";
 import { useState } from "react";
 import Lock from "@/assets/images/profile/lock.png";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
-interface ProfileProps {
-  fullname: string;
-  email: string;
-}
-export const ProfileInputFields = (props: ProfileProps) => {
-  const router = useRouter();
-  const [fullname, setFullName] = useState(props.fullname);
-  const [email, setEmail] = useState(props.email);
-  const [password, setPassword] = useState("Placeholder");
+import { useAuth } from "@/context/useAuth";
+import { updateUser } from "@/app/api";
+import { authAxiosInstance } from "@/lib/axios-client";
+
+export const ProfileInputFields = () => {
+  const { isAuthenticated, user, logout, refreshUser } = useAuth();
+  const [fullname, setFullName] = useState(user?.fullName ?? "");
+  const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const [openModal, setOpenModal] = useState(false);
 
   function onChangePassword(text: string) {
-    if (password == "Placeholder") {
-      setPassword("");
-    }
     setPassword(text);
   }
 
   function SaveData() {
-    setOpenModal(true);
+    if (password === "") {
+      ConfirmSave();
+    } else {
+      setOpenModal(true);
+    }
   }
 
   function Quit() {
-    router.replace("/(auth)/login");
+    logout();
   }
 
-  function ConfirmSave() {
+  async function ConfirmSave() {
+    const res = await updateUser({
+      client: authAxiosInstance,
+      body: {
+        email: user?.email ?? "",
+        fullName: fullname,
+        password: password === "" ? undefined : password,
+        currentPassword: password === "" ? undefined : passwordConfirm,
+      },
+    });
+
+    if (res.data) {
+      Alert.alert("Perubahan Berhasil", "Data berhasil disimpan");
+      await refreshUser();
+    }
+
+    if (res.error) {
+      Alert.alert(
+        "Perubahan Gagal",
+        // @ts-ignore
+        res.error ? (res.error.error ?? res.error.errors.formErrors[0]) : "Terjadi kesalahan"
+      );
+    }
+
+    setPassword("");
+    setPasswordConfirm("");
+
     setOpenModal(false);
   }
 
@@ -63,12 +97,9 @@ export const ProfileInputFields = (props: ProfileProps) => {
         </View>
         <View className="flex flex-col gap-0">
           <Text>Email</Text>
-          <TextInput
-            placeholder="Masukkan Email baru"
-            className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4 flex-wrap"
-            value={email}
-            onChangeText={setEmail}
-          />
+          <Text className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4 flex-wrap">
+            {user?.email ?? ""}
+          </Text>
         </View>
         <View className="flex flex-col gap-0">
           <Text>Kata Sandi</Text>
@@ -166,7 +197,7 @@ export const ProfileInputFields = (props: ProfileProps) => {
               >
                 <Pressable
                   className="flex w-max rounded-lg bg-pink"
-                  onPress={ConfirmSave}
+                  onPress={CancelSave}
                   style={{
                     backgroundColor: Colors.pink,
                     paddingHorizontal: 37,
@@ -177,7 +208,7 @@ export const ProfileInputFields = (props: ProfileProps) => {
                 </Pressable>
                 <Pressable
                   className=" flex items-center rounded-lg justify-center w-max bg-dark-green"
-                  onPress={CancelSave}
+                  onPress={ConfirmSave}
                   style={{
                     backgroundColor: Colors["dark-green"],
                     paddingHorizontal: 37,

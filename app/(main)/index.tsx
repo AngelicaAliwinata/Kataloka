@@ -10,10 +10,8 @@ import { useAuth } from "@/context/useAuth";
 import { useEffect } from "react";
 
 export default function HomeScreen() {
-  const { user, logout } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
   const router = useRouter();
-  const NamaDummy = "PALEN GAMING";
-
 
   return (
     <View
@@ -30,7 +28,10 @@ export default function HomeScreen() {
           lineHeight: 42,
         }}
       >
-        Selamat Datang di Kataloka, {handleShorteningText(user?.fullName ?? "", 15)}!
+        Selamat Datang di Kataloka
+        {isAuthenticated &&
+          `, ${handleShorteningText(user?.fullName ?? "", 15)}`}
+        !
       </Text>
 
       <View className="flex flex-col gap-5">

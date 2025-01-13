@@ -1,7 +1,15 @@
 import { View } from "react-native";
 import { ProfileInputFields } from "../components/profile/input-fields";
+import { useAuth } from "@/context/useAuth";
+import { router } from "expo-router";
 
 const ProfileScreen = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+
+  if (!isAuthenticated) {
+    router.replace("/(auth)/login");
+  }
+
   return (
     <View
       style={{
@@ -10,7 +18,7 @@ const ProfileScreen = () => {
       }}
       className="flex items-center h-full flex-1 bg-creme "
     >
-      <ProfileInputFields fullname={"TEST"} email={"test@gmail.com"} />
+      <ProfileInputFields />
     </View>
   );
 };

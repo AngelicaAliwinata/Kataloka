@@ -10,21 +10,19 @@ import { useEffect, useState } from "react";
 import { getQuiz, GetQuizResponse } from "../api";
 import { authAxiosInstance } from "@/lib/axios-client";
 import { useAuth } from "@/context/useAuth";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 export default function CerdasBersamaScreen() {
   const [data, setData] = useState<GetQuizResponse | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const { isAuthenticated } = useAuth();
-  const router = useRouter();
-
-  
 
   useEffect(() => {
     if (!isAuthenticated) {
       router.replace("/login");
       return;
     }
+
     getQuiz({ client: authAxiosInstance }).then((res) => {
       if (res.error) {
         console.error(res.error);
@@ -33,7 +31,6 @@ export default function CerdasBersamaScreen() {
       }
 
       setData(res.data);
-      console.log(res.data);
       setLoading(false);
     });
   }, []);
