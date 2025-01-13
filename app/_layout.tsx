@@ -9,7 +9,8 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import TopBar from "../components/nav/topbar";
+import TopBar from "@/components/nav/topbar";
+import { AuthProvider } from "@/context/useAuth";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -31,19 +32,21 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Stack>
-        <Stack.Screen name="(main)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="profile"
-          options={{
-            headerBackVisible: false,
-            header: () => <TopBar linkVisibility={false} />,
-          }}
-        />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </SafeAreaView>
+    <AuthProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Stack>
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(main)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="profile"
+            options={{
+              headerBackVisible: false,
+              header: () => <TopBar linkVisibility={false} />,
+            }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </SafeAreaView>
+    </AuthProvider>
   );
 }

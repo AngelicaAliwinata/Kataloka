@@ -19,7 +19,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors.creme,
-        header: () => <TopBar linkTitle={"Profile"} linkHref={"/profile"} />,
+        header: () => <TopBar linkTitle={"Profile"} linkHref={"/(auth)/login"} />,
         tabBarBackground: TabBarBackground,
 
         tabBarStyle: {

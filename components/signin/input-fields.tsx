@@ -1,14 +1,27 @@
-import { Link } from "expo-router";
+import { client, register } from "@/app/api";
+import { axiosInstance } from "@/lib/axios-client";
+import { Link, router } from "expo-router";
 import { useState } from "react";
 import { TextInput, View, Text, Pressable } from "react-native";
 
 export const SigninInputFields = () => {
-  const [fullname, setFullName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("")
 
-  function SignIn() {}
+  async function SignIn() {
+    console.log("Sign In");
+
+    const res = await register({
+      client: axiosInstance,
+      body: { fullName, email, password },
+    });
+
+    if (res.status === 201) {
+      router.push("/login");
+    }
+  }
 
   return (
     <View className="bg-light-green/20 p-10 rounded-xl flex flex-col gap-5">
@@ -17,7 +30,7 @@ export const SigninInputFields = () => {
         <TextInput
           placeholder="Masukkan Nama Lengkap anda"
           className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
-          value={fullname}
+          value={fullName}
           onChangeText={setFullName}
         />
       </View>
