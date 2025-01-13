@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-
 import { View, Image } from "react-native";
-import { SigninInputFields } from "../components/signin/input-fields";
+import { SigninInputFields } from "../../components/signin/input-fields";
 const mascot = require("../../assets/images/mascot.png");
 
 const DUMMY_USER = {

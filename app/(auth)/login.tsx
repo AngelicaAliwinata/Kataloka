@@ -11,7 +11,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, TextInput, Button, Text, Image, Pressable } from "react-native";
 import mascot from "@/assets/images/mascot.png";
-import { LoginInputFields } from "../components/login/input-fields";
+import { LoginInputFields } from "../../components/login/input-fields";
 
 const DUMMY_USER = {
   fullname: "dave@gmail.com",

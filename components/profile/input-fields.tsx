@@ -9,7 +9,7 @@ interface ProfileProps {
   email: string;
 }
 export const ProfileInputFields = (props: ProfileProps) => {
-    const router = useRouter();
+  const router = useRouter();
   const [fullname, setFullName] = useState(props.fullname);
   const [email, setEmail] = useState(props.email);
   const [password, setPassword] = useState("Placeholder");
@@ -29,7 +29,7 @@ export const ProfileInputFields = (props: ProfileProps) => {
   }
 
   function Quit() {
-    router.replace('/')
+    router.replace("/(auth)/login");
   }
 
   function ConfirmSave() {
