@@ -1,13 +1,35 @@
-import { Image, StyleSheet, Platform, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  View,
+  Text,
+  Pressable,
+} from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Link } from "expo-router";
+import { useAuth } from "@/context/useAuth";
 
 export default function HomeScreen() {
-  return <View></View>;
+  const { user, logout } = useAuth();
+  return (
+    <View>
+      {user ? (
+        <>
+          <Text>Halo, {JSON.stringify(user)}</Text>
+          <Pressable onPress={logout}>
+            <Text>Logout</Text>
+          </Pressable>
+        </>
+      ) : (
+        <Link href="/(auth)/login">Login</Link>
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
