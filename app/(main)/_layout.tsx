@@ -10,7 +10,7 @@ import HomeIcon from "@/assets/images/bottom-bar/beranda.svg";
 import CerdasIcon from "@/assets/images/bottom-bar/cerdas-bersama.png";
 import RuangBelajarIcon from "@/assets/images/bottom-bar/ruang-belajar.png";
 import KatapediaIcon from "@/assets/images/bottom-bar/katapedia.png";
-import TopBar from "../components/nav/topbar";
+import TopBar from "../../components/nav/topbar";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -18,19 +18,17 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        
         tabBarActiveTintColor: Colors.creme,
-        header: () => <TopBar linkTitle={"Profile"} linkHref={"/(auth)/login"} />,
+        header: () => <TopBar linkTitle={"Profile"} linkHref={"/profile"} />,
         tabBarBackground: TabBarBackground,
-        
+
         tabBarStyle: {
-          backgroundColor : Colors["light-green"],
+          backgroundColor: Colors["light-green"],
           paddingVertical: 10,
-          paddingTop : 15,
-          minHeight : 60
-        }
+          paddingTop: 15,
+          minHeight: 60,
+        },
       }}
-      
     >
       <Tabs.Screen
         name="index"
@@ -41,14 +39,17 @@ export default function TabLayout() {
               style={{
                 backgroundColor: focused ? "rgba(0, 0, 0, 0.2)" : "transparent",
                 borderRadius: 10,
-                padding: 8, 
-                
+                padding: 8,
               }}
             >
-              <HomeIcon width={35} height={30} style={{
-                width: 30,
-                height: 30
-              }} />
+              <HomeIcon
+                width={35}
+                height={30}
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+              />
             </View>
           ),
         }}
@@ -66,10 +67,15 @@ export default function TabLayout() {
                 padding: 8,
               }}
             >
-              <Image source={KatapediaIcon} width={35} height={30}style={{
-                width: 35,
-                height: 30
-              }}  />
+              <Image
+                source={KatapediaIcon}
+                width={35}
+                height={30}
+                style={{
+                  width: 35,
+                  height: 30,
+                }}
+              />
             </View>
           ),
         }}
@@ -86,10 +92,15 @@ export default function TabLayout() {
                 padding: 8,
               }}
             >
-              <Image source={RuangBelajarIcon} width={35} height={30} style={{
-                width: 35,
-                height: 30
-              }}  />
+              <Image
+                source={RuangBelajarIcon}
+                width={35}
+                height={30}
+                style={{
+                  width: 35,
+                  height: 30,
+                }}
+              />
             </View>
           ),
         }}
@@ -106,10 +117,15 @@ export default function TabLayout() {
                 padding: 8,
               }}
             >
-              <Image source={CerdasIcon} width={35} height={30} style={{
-                width: 35,
-                height: 30
-              }} />
+              <Image
+                source={CerdasIcon}
+                width={35}
+                height={30}
+                style={{
+                  width: 35,
+                  height: 30,
+                }}
+              />
             </View>
           ),
         }}

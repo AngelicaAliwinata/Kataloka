@@ -1,5 +1,4 @@
 import { useAuth } from "@/context/useAuth";
-import { axiosInstance } from "@/lib/axios-client";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import { View, TextInput, Pressable, Text, Alert } from "react-native";

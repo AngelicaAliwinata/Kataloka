@@ -8,6 +8,7 @@ export const SigninInputFields = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("")
 
   async function SignIn() {
     console.log("Sign In");
@@ -57,8 +58,8 @@ export const SigninInputFields = () => {
         <TextInput
           placeholder="Konfirmasikan Kata sandi anda"
           className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
-          value={password}
-          onChangeText={setPassword}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
           secureTextEntry
         />
       </View>
