@@ -1,9 +1,5 @@
 import { View, Text, Pressable } from "react-native";
 
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { Link, useRouter } from "expo-router";
 import { OptionCard } from "../../components/homepage/card";
 import KatapediaMascot from "@/assets/images/homepage/katapedia-mascot.png";
@@ -18,11 +14,6 @@ export default function HomeScreen() {
   const router = useRouter();
   const NamaDummy = "PALEN GAMING";
 
-  useEffect(() => {
-    if (!user) {
-      router.replace("/(auth)/login");
-    }
-  }, []);
 
   return (
     <View
@@ -39,7 +30,7 @@ export default function HomeScreen() {
           lineHeight: 42,
         }}
       >
-        Selamat Datang di Kataloka, {handleShorteningText(NamaDummy, 15)}!
+        Selamat Datang di Kataloka, {handleShorteningText(user?.fullName ?? "", 15)}!
       </Text>
 
       <View className="flex flex-col gap-5">
