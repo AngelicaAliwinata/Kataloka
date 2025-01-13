@@ -19,7 +19,7 @@ export const LoginInputFields = () => {
           className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
           value={email}
           onChangeText={setEmail}
-          secureTextEntry
+
         />
       </View>
       <View className="flex flex-col gap-0">
