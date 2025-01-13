@@ -61,13 +61,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (req.data) {
       setIsAuthenticated(true);
 
-      // Get User Data
+      // Set Axios Cookie
       authAxiosInstance.setConfig({
         withCredentials: true,
         headers: {
           Cookie: cookieResponse,
         },
       });
+
+      // Get User Data
       const userData = await self({ client: authAxiosInstance });
       setUser(userData.data ?? null);
       res.ok = true;
@@ -80,6 +82,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     setIsAuthenticated(false);
     setUser(null);
+    AsyncStorage.clear();
+
+    // Remove Axios Cookie
+    authAxiosInstance.setConfig({
+      withCredentials: false,
+      headers: {
+        Cookie: "",
+      },
+    });
+
     await credLogout({ client: authAxiosInstance });
     router.replace("/login");
   };
