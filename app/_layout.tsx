@@ -44,6 +44,10 @@ export default function RootLayout() {
               header: () => <TopBar linkVisibility={false} />,
             }}
           />
+          <Stack.Screen
+            name="cerdas-bersama"
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
       </SafeAreaView>

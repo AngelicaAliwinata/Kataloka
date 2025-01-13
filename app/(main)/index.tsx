@@ -64,7 +64,7 @@ export default function HomeScreen() {
           }}
           title={"Cerdas Bersama"}
           description={"Meningkatkan pemahaman berbahasa Indonesia melalui tes"}
-          link={"/(main)/cerdas-bersama"}
+          link={"/(main)/cerdas-bersama-entry"}
         />
       </View>
     </View>
