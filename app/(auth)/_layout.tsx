@@ -15,7 +15,7 @@ export default function AuthLayout() {
         <Stack.Screen
           name="signup"
           options={{
-            headerRight: () => (
+            header: () => (
               <TopBar linkTitle={"Masuk"} linkHref={"/(auth)/login"} />
             ),
           }}
