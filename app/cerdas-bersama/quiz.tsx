@@ -35,13 +35,8 @@ const QuizScreen = () => {
     const updatedAnswers = [...selectedAnswers];
     updatedAnswers[currentQuestion] = option;
     setSelectedAnswers(updatedAnswers);
-
-    // Automatically proceed to the next question if available
-    if (currentQuestion < data.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    }
+    
   };
-
 
   const allAnswered = selectedAnswers.every((answer) => answer !== "");
 
@@ -50,7 +45,7 @@ const QuizScreen = () => {
       {/* Progress Bar */}
       <ProgressBar currentQuestion={currentQuestion} maxLength={data.length} />
       {/* Question */}
-      <Question question={data[currentQuestion].question}/>
+      <Question question={data[currentQuestion].question} />
 
       {/* Options */}
       {data[currentQuestion].options.map((option, index) => {
@@ -59,11 +54,12 @@ const QuizScreen = () => {
 
         return (
           <Option
+            key={index}
             option={option}
             isSelected={isSelected}
             isCorrect={isCorrect}
             onSelect={() =>
-              setCurrentQuestion(Math.max(currentQuestion - 1, 0))
+              handleAnswer(option)
             }
           />
         );
@@ -71,9 +67,8 @@ const QuizScreen = () => {
       })}
 
       {/* Navigation Buttons */}
-      
-      {/* Modal */}
 
+      {/* Modal */}
     </View>
   );
 };

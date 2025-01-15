@@ -1,7 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { hexToRgba } from "@/utils/ColorHandler";
 import { TouchableOpacity, Text, View } from "react-native";
-import { BooleanLiteral } from "typescript";
 
 interface OptionProps {
   option: string;
@@ -16,23 +15,23 @@ export const Option = ({
   isCorrect,
   onSelect,
 }: OptionProps) => {
-  
   return (
     <TouchableOpacity
       onPress={onSelect}
       style={{
-        padding: 15,
+        padding: 20,
         borderWidth: 1,
         borderColor: Colors["dark-green"],
         backgroundColor: isSelected
           ? isCorrect
             ? hexToRgba(Colors["light-green"], 0.133)
             : Colors["red-pink"]
-          : "FFF",
+          : Colors.beige,
         marginBottom: 10,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        borderRadius: 6,
         gap: 10,
       }}
     >
