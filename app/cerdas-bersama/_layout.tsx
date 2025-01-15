@@ -1,11 +1,11 @@
-import TopBar from "@/components/nav/topbar";
+import { TopBar } from "@/components/nav/home-topbar";
 import { Stack } from "expo-router";
 
 const CerdasBersamaLayout = () => {
   return (
     <Stack>
       <Stack.Screen
-        name="onquiz"
+        name="quiz"
         options={{
           headerShown: false,
         }}

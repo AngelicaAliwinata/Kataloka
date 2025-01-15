@@ -27,5 +27,7 @@ export const Colors = {
   "dark-green": "#115246",
   "light-green": "#638666",
   pink: "#EE4362",
-  brown:  "#543B2F"
+  brown: "#543B2F",
+  "red-pink" : "#F8D7DA",
+  beige : "#FFFBED"
 };

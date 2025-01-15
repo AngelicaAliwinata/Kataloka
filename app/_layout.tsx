@@ -9,8 +9,9 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import TopBar from "@/components/nav/topbar";
+
 import { AuthProvider } from "@/context/useAuth";
+import { TopBar } from "@/components/nav/home-topbar";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

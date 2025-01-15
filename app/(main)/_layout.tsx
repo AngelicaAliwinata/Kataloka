@@ -10,7 +10,7 @@ import HomeIcon from "@/assets/images/bottom-bar/beranda.svg";
 import CerdasIcon from "@/assets/images/bottom-bar/cerdas-bersama.png";
 import RuangBelajarIcon from "@/assets/images/bottom-bar/ruang-belajar.png";
 import KatapediaIcon from "@/assets/images/bottom-bar/katapedia.png";
-import TopBar from "../../components/nav/topbar";
+import { TopBar } from "@/components/nav/home-topbar";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();

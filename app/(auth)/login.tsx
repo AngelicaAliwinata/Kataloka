@@ -18,6 +18,7 @@ const DUMMY_USER = {
   password: "dave123",
   accessToken: "FOEOFIE2EF",
 };
+
 const LoginScreen = () => {
   return (
     <View className="flex-1 bg-creme flex flex-col items-center justify-center gap-5 w-full">

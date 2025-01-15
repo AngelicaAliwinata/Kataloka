@@ -9,7 +9,7 @@ interface Props {
   linkHref?: Href<string | object>;
   linkVisibility?: boolean;
 }
-const TopBar = ({ linkTitle, linkHref, linkVisibility = true }: Props) => {
+export const TopBar = ({ linkTitle, linkHref, linkVisibility = true }: Props) => {
   return (
     <View className="flex flex-row justify-between w-full items-center p-4 bg-light-green" style={{
       display: "flex",
@@ -42,5 +42,3 @@ const TopBar = ({ linkTitle, linkHref, linkVisibility = true }: Props) => {
     </View>
   );
 };
-
-export default TopBar;

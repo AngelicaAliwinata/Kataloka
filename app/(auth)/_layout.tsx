@@ -1,7 +1,5 @@
+import { TopBar } from "@/components/nav/topbar";
 import { Stack } from "expo-router";
-import { SafeAreaView } from "react-native";
-import TopBar from "../../components/nav/topbar";
-import { Colors } from "@/constants/Colors";
 
 export default function AuthLayout() {
   return (
