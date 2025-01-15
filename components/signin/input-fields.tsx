@@ -1,4 +1,5 @@
 import { client, register } from "@/app/api";
+import { Colors } from "@/constants/Colors";
 import { axiosInstance } from "@/lib/axios-client";
 import { Link, router } from "expo-router";
 import { useState } from "react";
@@ -8,7 +9,7 @@ export const SigninInputFields = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   async function SignIn() {
     console.log("Sign In");
@@ -29,7 +30,12 @@ export const SigninInputFields = () => {
         <Text>Nama Lengkap</Text>
         <TextInput
           placeholder="Masukkan Nama Lengkap anda"
-          className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
+          className="border-[1px] border-dark-green bg-white rounded-[4px] h-[34px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
+          style={{
+            elevation: 4,
+            shadowColor: Colors["dark-green"],
+            shadowOpacity: 1,
+          }}
           value={fullName}
           onChangeText={setFullName}
         />
@@ -38,7 +44,12 @@ export const SigninInputFields = () => {
         <Text>Email</Text>
         <TextInput
           placeholder="Masukkan Email anda"
-          className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
+          className="border-[1px] border-dark-green bg-white rounded-[4px] h-[34px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
+          style={{
+            elevation: 4,
+            shadowColor: Colors["dark-green"],
+            shadowOpacity: 1,
+          }}
           value={email}
           onChangeText={setEmail}
         />
@@ -47,7 +58,12 @@ export const SigninInputFields = () => {
         <Text>Kata Sandi</Text>
         <TextInput
           placeholder="Masukkan Kata sandi anda"
-          className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
+          className="border-[1px] border-dark-green bg-white rounded-[4px] h-[34px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
+          style={{
+            elevation: 4,
+            shadowColor: Colors["dark-green"],
+            shadowOpacity: 1,
+          }}
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -57,7 +73,12 @@ export const SigninInputFields = () => {
         <Text>Konfirmasi Kata Sandi</Text>
         <TextInput
           placeholder="Konfirmasikan Kata sandi anda"
-          className="border-[1px] border-[#b0b0b0] bg-white rounded-[8px] h-[48px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
+          className="border-[1px] border-dark-green bg-white rounded-[4px] h-[34px] p-2 text-[#888888] max-w-[342px] w-full  pl-4"
+          style={{
+            elevation: 4,
+            shadowColor: Colors["dark-green"],
+            shadowOpacity: 1,
+          }}
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           secureTextEntry

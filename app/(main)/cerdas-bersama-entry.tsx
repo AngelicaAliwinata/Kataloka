@@ -13,7 +13,7 @@ import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
 const HomeQuizScreen = () => {
   function startQuiz() {
-    router.replace("/cerdas-bersama/onquiz");
+    router.replace("/cerdas-bersama/quiz");
   }
 
   function backToHomepage() {
