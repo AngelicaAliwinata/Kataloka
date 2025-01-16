@@ -16,6 +16,7 @@ export type User = {
     email: string;
     fullName: (string) | null;
     password: string;
+    quizScore: (number) | null;
     createdAt: (string);
     updatedAt: (string);
 };
@@ -52,7 +53,7 @@ export type LoginData = {
     };
 };
 
-export type LoginResponse = (unknown);
+export type LoginResponse = (User);
 
 export type LoginError = ((GenericError | ValidationError) | GenericError);
 
@@ -76,6 +77,16 @@ export type UpdateUserData = {
 export type UpdateUserResponse = (User);
 
 export type UpdateUserError = ((GenericError | ValidationError) | GenericError);
+
+export type UpdateUserScoreData = {
+    body?: {
+        score: number;
+    };
+};
+
+export type UpdateUserScoreResponse = (User);
+
+export type UpdateUserScoreError = ((GenericError | ValidationError) | GenericError);
 
 export type GetQuizResponse = (Array<Quiz>);
 
