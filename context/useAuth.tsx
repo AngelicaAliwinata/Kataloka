@@ -6,7 +6,7 @@ import {
 } from "@/app/api";
 import { authAxiosInstance, axiosInstance } from "@/lib/axios-client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { createContext, useState, useContext, ReactNode } from "react";
 
 export interface loginResponse {
@@ -17,6 +17,7 @@ export interface loginResponse {
 export interface AuthContextProps {
   isAuthenticated: boolean;
   user: User | null;
+  refreshUser: () => Promise<void>;
   getCookie: () => Promise<string | null>;
   login: (email: string, password: string) => Promise<loginResponse>;
   logout: () => void;
@@ -27,7 +28,6 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
 
   const login = async (email: string, password: string) => {
     const req = (await credLogin({
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     await credLogout({ client: authAxiosInstance });
-    router.replace("/login");
+    router.replace("/(auth)/login");
   };
 
   const getCookie = async () => {
@@ -105,11 +105,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return null;
   };
 
+  const refreshUser = async () => {
+    const userData = await self({ client: authAxiosInstance });
+    setUser(userData.data ?? null);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
         user,
+        refreshUser,
         getCookie,
         login,
         logout,

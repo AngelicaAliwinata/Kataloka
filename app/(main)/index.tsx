@@ -11,10 +11,8 @@ import { useEffect } from "react";
 import { Colors } from "@/constants/Colors";
 
 export default function HomeScreen() {
-  const { user, logout } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
   const router = useRouter();
-  const NamaDummy = "PALEN GAMING";
-
 
   return (
     <View
@@ -33,7 +31,10 @@ export default function HomeScreen() {
           paddingBottom : 10
         }}
       >
-        Selamat Datang di Kataloka, {handleShorteningText(user?.fullName ?? "", 15)}!
+        Selamat Datang di Kataloka
+        {isAuthenticated &&
+          `, ${handleShorteningText(user?.fullName ?? "", 15)}`}
+        !
       </Text>
       <Text style={{
         fontSize : 18,

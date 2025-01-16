@@ -12,8 +12,6 @@ export const SigninInputFields = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   async function SignIn() {
-    console.log("Sign In");
-
     const res = await register({
       client: axiosInstance,
       body: { fullName, email, password },
