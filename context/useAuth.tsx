@@ -67,8 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       // Get User Data
-      // @ts-expect-error - ignore
-      const userData = req.data.user;
+      const userData = req.data;
       console.log("userData", userData);
       setUser(userData ?? null);
       res.ok = true;

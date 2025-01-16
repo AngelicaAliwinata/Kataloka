@@ -78,15 +78,12 @@ export type UpdateUserResponse = (User);
 
 export type UpdateUserError = ((GenericError | ValidationError) | GenericError);
 
-export type UpdateUserScoreData = {
-    body?: {
-        score: number;
-    };
-};
+export type GetUserScoreResponse = ({
+    score: number;
+    totalScore: number;
+});
 
-export type UpdateUserScoreResponse = (User);
-
-export type UpdateUserScoreError = ((GenericError | ValidationError) | GenericError);
+export type GetUserScoreError = ((GenericError | ValidationError) | GenericError);
 
 export type GetQuizResponse = (Array<Quiz>);
 
