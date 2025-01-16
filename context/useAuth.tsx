@@ -30,21 +30,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   const login = async (email: string, password: string) => {
-    const req = await credLogin({
+    const req = (await credLogin({
       client: axiosInstance,
       body: { email: email, password },
-    });
-
-    const cookieResponse = "kataThor=" + req.data.accessToken;
-    if (cookieResponse) {
-      console.log("Login", cookieResponse);
-      try {
-        await AsyncStorage.setItem("kataThor", cookieResponse);
-      } catch (e) {
-        console.log("Cookies failed to store:", e);
-      }
-      console.log("Cookies stored:", cookieResponse);
-    }
+    })) as { data: { accessToken: string } };
 
     const res: loginResponse = {
       ok: false,
@@ -53,21 +42,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (!req.data) {
       res.error = true;
-      console.log("Login failed");
-      console.log(req);
+      console.error("Email atau Password salah!");
       return res;
+    }
+
+    const cookieResponse = "kataThor=" + req.data.accessToken;
+    if (cookieResponse) {
+      try {
+        await AsyncStorage.setItem("kataThor", cookieResponse);
+      } catch (e) {
+        console.log("Cookies failed to store:", e);
+      }
     }
 
     if (req.data) {
       setIsAuthenticated(true);
 
-      // Get User Data
+      // Set Axios Cookie
       authAxiosInstance.setConfig({
         withCredentials: true,
         headers: {
           Cookie: cookieResponse,
         },
       });
+
+      // Get User Data
       const userData = await self({ client: authAxiosInstance });
       setUser(userData.data ?? null);
       res.ok = true;
@@ -80,6 +79,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     setIsAuthenticated(false);
     setUser(null);
+    AsyncStorage.clear();
+
+    // Remove Axios Cookie
+    authAxiosInstance.setConfig({
+      withCredentials: false,
+      headers: {
+        Cookie: "",
+      },
+    });
+
     await credLogout({ client: authAxiosInstance });
     router.replace("/login");
   };
