@@ -10,7 +10,9 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "openapi-ts": "openapi-ts"
+    "openapi-ts": "openapi-ts",
+    "eas-build-pre-install" : "npm install && npm run openapi-ts"
+    
   },
   "jest": {
     "preset": "jest-expo"
