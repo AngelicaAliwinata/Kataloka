@@ -11,13 +11,15 @@ import {
 import QuizMascot from "@/assets/images/cerdas-bersama/mascot-quiz.png";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
+import { ShowVideoWarningModal } from "@/components/cerdas-bersama/entry/show-video-recommendation";
 const HomeQuizScreen = () => {
+  const [showModal, setShowModal] = useState(false);
   function startQuiz() {
-    router.replace("/cerdas-bersama/quiz");
+    setShowModal(true);
   }
 
   function backToHomepage() {
-    router.replace("/");
+    router.push("/");
   }
 
   return (
@@ -25,6 +27,7 @@ const HomeQuizScreen = () => {
       style={{
         backgroundColor: Colors.creme,
         gap: 10,
+        paddingTop: 30,
       }}
       className="text-center flex flex-col w-full h-screen items-center"
     >
@@ -38,7 +41,12 @@ const HomeQuizScreen = () => {
       >
         Cerdas Bersama
       </Text>
-      <Text className="text-base text-brown">
+      <Text
+        className="text-base text-brown"
+        style={{
+          fontSize: 18,
+        }}
+      >
         Ikuti tes untuk menguji kemampuanmu!
       </Text>
 
@@ -107,6 +115,11 @@ const HomeQuizScreen = () => {
           </Text>
         </Pressable>
       </View>
+
+      <ShowVideoWarningModal
+        isModalVisible={showModal}
+        setModalVisible={setShowModal}
+      />
     </View>
   );
 };

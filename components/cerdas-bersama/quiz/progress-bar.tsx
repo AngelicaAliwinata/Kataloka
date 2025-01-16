@@ -8,9 +8,10 @@ interface Props {
 }
 
 export const ProgressBar = ({ currentQuestion, maxLength }: Props) => {
+  const percentage = currentQuestion / maxLength * 100
   return (
     <View
-      style={{ flexDirection: "row", alignItems: "center", marginBottom: 42 }}
+      style={{ flexDirection: "row", alignItems: "center", marginBottom: 30 }}
     >
       <View
         style={{
@@ -22,7 +23,7 @@ export const ProgressBar = ({ currentQuestion, maxLength }: Props) => {
       >
         <View
           style={{
-            width: `${((currentQuestion + 1) / maxLength) * 100}%`,
+            width: `${percentage}%`,
             height: "100%",
             backgroundColor: Colors["dark-green"],
             borderRadius: 20,
@@ -39,7 +40,7 @@ export const ProgressBar = ({ currentQuestion, maxLength }: Props) => {
           textAlign: "center",
         }}
       >
-        {Math.round(((currentQuestion + 1) / maxLength) * 100)}%
+        {Math.round(percentage)}%
       </Text>
     </View>
   );

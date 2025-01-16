@@ -8,6 +8,7 @@ import RuangBelajarMascot from "@/assets/images/homepage/ruang-belajar-mascot.pn
 import { handleShorteningText } from "@/utils/StringHandler";
 import { useAuth } from "@/context/useAuth";
 import { useEffect } from "react";
+import { Colors } from "@/constants/Colors";
 
 export default function HomeScreen() {
   const { user, logout } = useAuth();
@@ -20,6 +21,7 @@ export default function HomeScreen() {
       className="w-full h-full bg-creme"
       style={{
         paddingHorizontal: 40,
+        paddingTop: 20
       }}
     >
       <Text
@@ -28,10 +30,19 @@ export default function HomeScreen() {
           fontSize: 28,
           fontWeight: 700,
           lineHeight: 42,
+          paddingBottom : 10
         }}
       >
         Selamat Datang di Kataloka, {handleShorteningText(user?.fullName ?? "", 15)}!
       </Text>
+      <Text style={{
+        fontSize : 18,
+        lineHeight: 24,
+        fontWeight : "400",
+        color : Colors.brown,
+        paddingBottom : 16,
+        textAlign : "center"
+      }}>Pilih salah satu metode pembelajaran!</Text>
 
       <View className="flex flex-col gap-5">
         <OptionCard

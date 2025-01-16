@@ -12,7 +12,8 @@ export const Question = ({ question }: QuestionProps) => {
         backgroundColor: "#F6DCC3",
         paddingHorizontal: 18,
         paddingVertical: 12,
-        marginBottom: 20,
+        
+        borderRadius : 6
       }}
     >
       <Text

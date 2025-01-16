@@ -7,6 +7,7 @@ interface OptionProps {
   isSelected: boolean;
   isCorrect: boolean;
   onSelect: () => void;
+  isAnswered: boolean;
 }
 
 export const Option = ({
@@ -14,9 +15,11 @@ export const Option = ({
   isSelected,
   isCorrect,
   onSelect,
+  isAnswered,
 }: OptionProps) => {
   return (
     <TouchableOpacity
+      disabled={isAnswered}
       onPress={onSelect}
       style={{
         padding: 20,
@@ -27,7 +30,7 @@ export const Option = ({
             ? hexToRgba(Colors["light-green"], 0.133)
             : Colors["red-pink"]
           : Colors.beige,
-        marginBottom: 10,
+        
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -41,19 +44,23 @@ export const Option = ({
           height: 20,
           borderRadius: 10,
           borderWidth: 2,
-          borderColor: isSelected
-            ? isCorrect
-              ? Colors["dark-green"]
-              : Colors["red-pink"]
-            : "b0b0b0b0",
-          backgroundColor: isSelected
-            ? isCorrect
-              ? Colors["dark-green"]
-              : Colors["red-pink"]
-            : "#FFF",
+          borderColor: Colors["dark-green"],
           marginRight: 10,
+          padding: 3,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
-      />
+      >
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            borderRadius: 20,
+            backgroundColor: isSelected ? Colors["dark-green"] : Colors.creme,
+          }}
+        ></View>
+      </View>
 
       <Text className="text-base font-normal text-black">{option}</Text>
     </TouchableOpacity>
