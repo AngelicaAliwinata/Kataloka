@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,22 +11,40 @@ import QuizMascot from "@/assets/images/cerdas-bersama/mascot-quiz.png";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
 import { ShowScoreModal } from "@/components/cerdas-bersama/ending/score-modal";
+import { getUserScore } from "../api";
+import { authAxiosInstance } from "@/lib/axios-client";
+import { useAuth } from "@/context/useAuth";
 const EndingQuizScreen = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [score, setScore] = useState(0);
+  const [maxScore, setMaxScore] = useState(0);
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    router.replace("/(auth)/login");
+  }
+
+  useEffect(() => {
+    const score = getUserScore({
+      client: authAxiosInstance,
+    }).then((res) => {
+      console.log(res.data);
+      setScore(res.data?.score ?? 0);
+      setMaxScore(res.data?.totalScore ?? 0);
+    });
+  }, []);
+
   function startQuiz() {
     router.replace("/cerdas-bersama/quiz");
   }
 
-  function showScore() {
+  async function showScore() {
     setOpenModal(true);
   }
 
   function backToHomepage() {
     router.replace("/");
   }
-
-  const TotalScore = 2;
-  const MaxScore = 10;
 
   return (
     <View
@@ -142,8 +160,8 @@ const EndingQuizScreen = () => {
         </TouchableOpacity>
       </View>
       <ShowScoreModal
-        totalScore={TotalScore}
-        maxScore={MaxScore}
+        totalScore={score ?? 0}
+        maxScore={maxScore ?? 0}
         isModalVisible={openModal}
         setModalVisible={setOpenModal}
       />

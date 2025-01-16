@@ -30,10 +30,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   const login = async (email: string, password: string) => {
-    const req = (await credLogin({
+    const req = await credLogin({
       client: axiosInstance,
       body: { email: email, password },
-    })) as { data: { accessToken: string } };
+    });
 
     const res: loginResponse = {
       ok: false,
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return res;
     }
 
-    const cookieResponse = "kataThor=" + req.data.accessToken;
+    const cookieResponse = req.headers["set-cookie"]?.[0];
     if (cookieResponse) {
       try {
         await AsyncStorage.setItem("kataThor", cookieResponse);
@@ -67,8 +67,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       // Get User Data
-      const userData = await self({ client: authAxiosInstance });
-      setUser(userData.data ?? null);
+      const userData = req.data;
+      console.log("userData", userData);
+      setUser(userData ?? null);
       res.ok = true;
       router.replace("/");
     }

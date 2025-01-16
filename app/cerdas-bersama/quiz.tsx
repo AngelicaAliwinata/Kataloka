@@ -24,12 +24,7 @@ const QuizScreen = () => {
   const { setLoading, isLoading } = useLoading();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
-  const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>(
-    Array(data?.length).fill({
-      question: "",
-      status: "unanswered",
-    })
-  );
+  const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>([]);
 
   const { isAuthenticated } = useAuth();
 
@@ -41,20 +36,29 @@ const QuizScreen = () => {
     }
 
     setLoading(true);
-    getQuiz({ client: authAxiosInstance }).then((res) => {
-      if (res.error) {
-        console.error(res.error);
-        setLoading(false);
-        router.replace("/(main)/cerdas-bersama-entry");
-        Alert.alert("Data gagal di proses", "Periksa koneksi internet anda");
-        return;
-      }
+    getQuiz({ client: authAxiosInstance })
+      .then((res) => {
+        console.log("FINISHED FETCHING QUIZ");
+        if (res.error) {
+          console.error(res.error);
+          setLoading(false);
+          router.replace("/(main)/cerdas-bersama-entry");
+          Alert.alert("Data gagal di proses", "Periksa koneksi internet anda");
+          return;
+        }
 
-      setData(res.data);
-      setLoading(false);
-    });
-    setLoading(false);
-  });
+        setData(res.data);
+        setSelectedAnswers(
+          Array(res.data.length).fill({
+            question: "",
+            status: "unanswered",
+          })
+        );
+      })
+      .then(() => {
+        setLoading(false);
+      });
+  }, []);
 
   const handleAnswer = (option: string, status: "correct" | "wrong") => {
     if (selectedAnswers[currentQuestion].status !== "unanswered") return;
