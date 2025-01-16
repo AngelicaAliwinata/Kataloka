@@ -1,10 +1,11 @@
 {
   "expo": {
     "name": "Kataloka",
-    "slug": "Kataloka",
+    "slug": "katapedia",
+    "owner": "angelicaaliwinata",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/kataloka-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,21 +14,21 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/kataloka-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/kataloka-icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/kataloka-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -58,7 +59,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "912d8ef4-1f8b-48ca-9605-e816a741cc9d"
+        "projectId": "5f8a86fe-a9c5-44b5-8333-684c8bcf2e9e"
       }
     }
   }

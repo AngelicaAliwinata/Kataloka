@@ -21,7 +21,6 @@ export const ProfileInputFields = () => {
   const [fullname, setFullName] = useState(user?.fullName ?? "");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-
   const [openModal, setOpenModal] = useState(false);
 
   function onChangePassword(text: string) {

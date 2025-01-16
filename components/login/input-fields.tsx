@@ -13,13 +13,15 @@ export const LoginInputFields = () => {
   const { login } = useAuth();
   const { setLoading } = useLoading();
   async function Login() {
+    setLoading(true);
     const res = await login(email, password);
-    
+
     if (res.ok) {
+      setLoading(false);
       router.push("/");
       return;
     }
-
+    setLoading(false);
     Alert.alert("Login Gagal", "Email atau Password Salah");
   }
   return (

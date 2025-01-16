@@ -1,5 +1,6 @@
 import { client, register } from "@/app/api";
 import { Colors } from "@/constants/Colors";
+import { useLoading } from "@/context/useLoading";
 import { axiosInstance } from "@/lib/axios-client";
 import { Link, router } from "expo-router";
 import { useState } from "react";
@@ -7,27 +8,29 @@ import {
   TextInput,
   View,
   Text,
-  Pressable,
   TouchableOpacity,
   Alert,
 } from "react-native";
 
 export const SigninInputFields = () => {
+  const {setLoading} = useLoading();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   async function SignIn() {
-    console.log("TESTING");
+    setLoading(true);
     const res = await register({
       client: axiosInstance,
       body: { fullName, email, password },
     });
 
     if (res.status === 201) {
+      setLoading(false);
       router.push("/login");
     } else {
+      setLoading(false);
       Alert.alert("Gagal Daftar", "Terjadi Kesalahan");
     }
   }

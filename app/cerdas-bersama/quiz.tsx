@@ -7,20 +7,12 @@ import { QuestionPagination } from "@/components/cerdas-bersama/quiz/question-pa
 import { SubmissionModal } from "@/components/cerdas-bersama/quiz/submission-validation-modal";
 import { Colors } from "@/constants/Colors";
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Modal,
-  ScrollView,
-  Alert,
-} from "react-native";
-import { getQuiz, GetQuizResponse } from "../api";
+import { View, ScrollView, Alert } from "react-native";
+import { getQuiz, GetQuizResponse } from "api/index";
 import { useAuth } from "@/context/useAuth";
 import { router } from "expo-router";
 import { authAxiosInstance } from "@/lib/axios-client";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
+import { useLoading } from "@/context/useLoading";
 
 interface Answer {
   question: string;
@@ -29,7 +21,7 @@ interface Answer {
 
 const QuizScreen = () => {
   const [data, setData] = useState<GetQuizResponse | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
+  const { setLoading, isLoading } = useLoading();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>(
@@ -48,6 +40,7 @@ const QuizScreen = () => {
       return;
     }
 
+    setLoading(true);
     getQuiz({ client: authAxiosInstance }).then((res) => {
       if (res.error) {
         console.error(res.error);
@@ -60,6 +53,7 @@ const QuizScreen = () => {
       setData(res.data);
       setLoading(false);
     });
+    setLoading(false);
   });
 
   const handleAnswer = (option: string, status: "correct" | "wrong") => {
@@ -86,7 +80,7 @@ const QuizScreen = () => {
       if (element.status !== "unanswered") {
         value.push(number);
       }
-    number++;
+      number++;
     });
 
     return value;
@@ -102,93 +96,87 @@ const QuizScreen = () => {
   const maxLength = data ? data.length : 0;
   const definedData = data ?? [];
 
-  if (loading) {
+  if (!isLoading) {
     return (
-      <ThemedView>
-        <ThemedText>Loading...</ThemedText>
-      </ThemedView>
-    );
-  }
-
-  return (
-    <ScrollView
-      style={{
-        flex: 1,
-        marginTop: 10,
-        padding: 20,
-        backgroundColor: Colors.creme,
-      }}
-    >
-      {/* Progress Bar */}
-      <ProgressBar
-        currentQuestion={answeredNumbers.length}
-        maxLength={maxLength}
-      />
-
-      <View
+      <ScrollView
         style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 20,
-          marginBottom: 50,
+          flex: 1,
+          marginTop: 10,
+          padding: 20,
+          backgroundColor: Colors.creme,
         }}
       >
-        {/* Question */}
+        {/* Progress Bar */}
+        <ProgressBar
+          currentQuestion={answeredNumbers.length}
+          maxLength={maxLength}
+        />
+
         <View
           style={{
-            marginBottom: 10,
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+            marginBottom: 50,
           }}
         >
-          <Question question={definedData[currentQuestion].question} />
+          {/* Question */}
+          <View
+            style={{
+              marginBottom: 10,
+            }}
+          >
+            <Question question={definedData[currentQuestion].question} />
+          </View>
+
+          {/* Options */}
+          {definedData[currentQuestion].choice.map((option, index) => {
+            const isSelected =
+              selectedAnswers[currentQuestion].question === option;
+            const isCorrect = index === definedData[currentQuestion].answerIdx;
+
+            return (
+              <Option
+                key={index}
+                option={option}
+                isSelected={isSelected}
+                isAnswered={
+                  selectedAnswers[currentQuestion].status !== "unanswered"
+                }
+                isCorrect={isCorrect}
+                onSelect={() =>
+                  handleAnswer(option, isCorrect ? "correct" : "wrong")
+                }
+              />
+            );
+          })}
+          {/* Navigation by Pagination */}
+          <QuestionPagination
+            maxQuestion={definedData.length}
+            currentQuestion={currentQuestion}
+            onSelect={setCurrentQuestion}
+            answeredNumbers={answeredNumbers()}
+          />
+          {/* Navigation by Button */}
+          <NavigationButton
+            currentQuestion={currentQuestion}
+            totalQuestions={definedData.length}
+            onNext={() => setCurrentQuestion((prev) => prev + 1)}
+            onPrev={() => setCurrentQuestion((prev) => prev - 1)}
+            onSubmit={() => handleSubmit()}
+          />
         </View>
 
-        {/* Options */}
-        {definedData[currentQuestion].choice.map((option, index) => {
-          const isSelected =
-            selectedAnswers[currentQuestion].question === option;
-          const isCorrect = index === definedData[currentQuestion].answerIdx;
-
-          return (
-            <Option
-              key={index}
-              option={option}
-              isSelected={isSelected}
-              isAnswered={
-                selectedAnswers[currentQuestion].status !== "unanswered"
-              }
-              isCorrect={isCorrect}
-              onSelect={() =>
-                handleAnswer(option, isCorrect ? "correct" : "wrong")
-              }
-            />
-          );
-        })}
-        {/* Navigation by Pagination */}
-        <QuestionPagination
-          maxQuestion={definedData.length}
-          currentQuestion={currentQuestion}
-          onSelect={setCurrentQuestion}
-          answeredNumbers={answeredNumbers()}
+        {/* Modal */}
+        <SubmissionModal
+          totalScore={totalScore()}
+          isModalVisible={isModalVisible}
+          setModalVisible={setModalVisible}
+          maxScore={definedData.length}
         />
-        {/* Navigation by Button */}
-        <NavigationButton
-          currentQuestion={currentQuestion}
-          totalQuestions={definedData.length}
-          onNext={() => setCurrentQuestion((prev) => prev + 1)}
-          onPrev={() => setCurrentQuestion((prev) => prev - 1)}
-          onSubmit={() => handleSubmit()}
-        />
-      </View>
-
-      {/* Modal */}
-      <SubmissionModal
-        totalScore={totalScore()}
-        isModalVisible={isModalVisible}
-        setModalVisible={setModalVisible}
-        maxScore={definedData.length}
-      />
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
 };
 
 export default QuizScreen;
