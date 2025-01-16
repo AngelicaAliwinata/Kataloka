@@ -6,81 +6,21 @@ import { Question } from "@/components/cerdas-bersama/quiz/question";
 import { QuestionPagination } from "@/components/cerdas-bersama/quiz/question-pagination";
 import { SubmissionModal } from "@/components/cerdas-bersama/quiz/submission-validation-modal";
 import { Colors } from "@/constants/Colors";
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
-
-const data = [
-  {
-    question: "Manakah penulisan kata yang sesuai dengan EYD?",
-    options: [
-      "Memperhatikan",
-      "Memperhatikkan",
-      "Memerhatikan",
-      "Memperhati-kan",
-    ],
-    correctAnswer: "Memperhatikan",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-  {
-    question: "Manakah penulisan kata yang salah?",
-    options: ["Berjalan-jalan", "Mengkonsumsi", "Memperhatikan", "Tertawa"],
-    correctAnswer: "Mengkonsumsi",
-  },
-];
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  ScrollView,
+  Alert,
+} from "react-native";
+import { getQuiz, GetQuizResponse } from "../api";
+import { useAuth } from "@/context/useAuth";
+import { router } from "expo-router";
+import { authAxiosInstance } from "@/lib/axios-client";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
 
 interface Answer {
   question: string;
@@ -88,14 +28,39 @@ interface Answer {
 }
 
 const QuizScreen = () => {
+  const [data, setData] = useState<GetQuizResponse | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>(
-    Array(data.length).fill({
+    Array(data?.length).fill({
       question: "",
       status: "unanswered",
     })
   );
+
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.dismissAll();
+      router.replace("/login");
+      return;
+    }
+
+    getQuiz({ client: authAxiosInstance }).then((res) => {
+      if (res.error) {
+        console.error(res.error);
+        setLoading(false);
+        router.replace("/(main)/cerdas-bersama-entry");
+        Alert.alert("Data gagal di proses", "Periksa koneksi internet anda");
+        return;
+      }
+
+      setData(res.data);
+      setLoading(false);
+    });
+  });
 
   const handleAnswer = (option: string, status: "correct" | "wrong") => {
     if (selectedAnswers[currentQuestion].status !== "unanswered") return;
@@ -121,7 +86,7 @@ const QuizScreen = () => {
       if (element.status !== "unanswered") {
         value.push(number);
       }
-      number++;
+    number++;
     });
 
     return value;
@@ -133,6 +98,17 @@ const QuizScreen = () => {
     );
     return data.length;
   };
+
+  const maxLength = data ? data.length : 0;
+  const definedData = data ?? [];
+
+  if (loading) {
+    return (
+      <ThemedView>
+        <ThemedText>Loading...</ThemedText>
+      </ThemedView>
+    );
+  }
 
   return (
     <ScrollView
@@ -146,7 +122,7 @@ const QuizScreen = () => {
       {/* Progress Bar */}
       <ProgressBar
         currentQuestion={answeredNumbers.length}
-        maxLength={data.length}
+        maxLength={maxLength}
       />
 
       <View
@@ -163,14 +139,14 @@ const QuizScreen = () => {
             marginBottom: 10,
           }}
         >
-          <Question question={data[currentQuestion].question} />
+          <Question question={definedData[currentQuestion].question} />
         </View>
 
         {/* Options */}
-        {data[currentQuestion].options.map((option, index) => {
+        {definedData[currentQuestion].choice.map((option, index) => {
           const isSelected =
             selectedAnswers[currentQuestion].question === option;
-          const isCorrect = option === data[currentQuestion].correctAnswer;
+          const isCorrect = index === definedData[currentQuestion].answerIdx;
 
           return (
             <Option
@@ -189,7 +165,7 @@ const QuizScreen = () => {
         })}
         {/* Navigation by Pagination */}
         <QuestionPagination
-          maxQuestion={data.length}
+          maxQuestion={definedData.length}
           currentQuestion={currentQuestion}
           onSelect={setCurrentQuestion}
           answeredNumbers={answeredNumbers()}
@@ -197,7 +173,7 @@ const QuizScreen = () => {
         {/* Navigation by Button */}
         <NavigationButton
           currentQuestion={currentQuestion}
-          totalQuestions={data.length}
+          totalQuestions={definedData.length}
           onNext={() => setCurrentQuestion((prev) => prev + 1)}
           onPrev={() => setCurrentQuestion((prev) => prev - 1)}
           onSubmit={() => handleSubmit()}
@@ -209,7 +185,7 @@ const QuizScreen = () => {
         totalScore={totalScore()}
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
-        maxScore={data.length}
+        maxScore={definedData.length}
       />
     </ScrollView>
   );

@@ -68,7 +68,7 @@ export const QuestionPagination = ({
           };
           return (
             <TouchableOpacity
-              key={index}
+            key={index}
               onPress={isIndex ? () => onSelect(index) : () => function () {}}
               style={{
                 alignItems: "center",

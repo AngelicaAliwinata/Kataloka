@@ -6,7 +6,6 @@ import {
   Modal,
   Image,
   Button,
-  Pressable,
 } from "react-native";
 import QuizMascot from "@/assets/images/cerdas-bersama/mascot-quiz.png";
 import { Colors } from "@/constants/Colors";
@@ -18,7 +17,7 @@ const EndingQuizScreen = () => {
     router.replace("/cerdas-bersama/quiz");
   }
 
-  function showScore(){
+  function showScore() {
     setOpenModal(true);
   }
 
@@ -48,10 +47,13 @@ const EndingQuizScreen = () => {
       >
         Cerdas Bersama
       </Text>
-      <Text className="text-base text-brown" style={{
-        fontSize : 18,
-        lineHeight: 28
-      }}>
+      <Text
+        className="text-base text-brown"
+        style={{
+          fontSize: 18,
+          lineHeight: 28,
+        }}
+      >
         Ikuti tes untuk menguji kemampuanmu!
       </Text>
 
@@ -81,7 +83,7 @@ const EndingQuizScreen = () => {
         >
           Tes Selesai!
         </Text>
-        <Pressable
+        <TouchableOpacity
           className="rounded-lg"
           style={{
             paddingHorizontal: 52,
@@ -99,8 +101,8 @@ const EndingQuizScreen = () => {
           >
             Ulangi Tes
           </Text>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           className="rounded-lg"
           style={{
             paddingHorizontal: 52,
@@ -118,8 +120,8 @@ const EndingQuizScreen = () => {
           >
             Lihat Nilai
           </Text>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           className="rounded-lg"
           style={{
             paddingHorizontal: 52,
@@ -137,7 +139,7 @@ const EndingQuizScreen = () => {
           >
             Kembali
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       <ShowScoreModal
         totalScore={TotalScore}

@@ -5,7 +5,7 @@ import {
   ImageSourcePropType,
   View,
   Text,
-  Pressable,
+  TouchableOpacity,
 } from "react-native";
 
 interface Props {
@@ -25,7 +25,7 @@ export const OptionCard = ({ image, title, description, link }: Props) => {
     router.push(link);
   }
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={redirectToPage}
       className="flex flex-col gap-1 rounded-lg items-center"
       style={{
@@ -54,6 +54,6 @@ export const OptionCard = ({ image, title, description, link }: Props) => {
       <Text className="font-normal text-brown text-sm text-center">
         {description}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };

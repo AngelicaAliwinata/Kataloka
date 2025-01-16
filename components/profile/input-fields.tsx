@@ -3,15 +3,15 @@ import {
   TextInput,
   View,
   Text,
-  Pressable,
+  TouchableOpacity,
   Modal,
   Alert,
 } from "react-native";
 import ProfileIcon from "@/assets/images/profil.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Lock from "@/assets/images/profile/lock.png";
 import { Colors } from "@/constants/Colors";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 import { useAuth } from "@/context/useAuth";
 import { updateUser } from "@/app/api";
 import { authAxiosInstance } from "@/lib/axios-client";
@@ -26,6 +26,10 @@ export const ProfileInputFields = () => {
 
   function onChangePassword(text: string) {
     setPassword(text);
+  }
+
+  if (!isAuthenticated) {
+    logout();
   }
 
   function SaveData() {
@@ -60,7 +64,7 @@ export const ProfileInputFields = () => {
       Alert.alert(
         "Perubahan Gagal",
         // @ts-ignore
-        res.error ? (res.error.error ?? res.error.errors.formErrors[0]) : "Terjadi kesalahan"
+        res.error ? res.error : "Terjadi kesalahan"
       );
     }
 
@@ -112,7 +116,7 @@ export const ProfileInputFields = () => {
           />
         </View>
         <View className="min-w-full flex flex-col gap-5">
-          <Pressable
+          <TouchableOpacity
             onPress={SaveData}
             className="bg-dark-green  text-center flex justify-center items-center py-2 rounded-lg w-max border-dark-green border shadow-lg"
             style={{
@@ -123,8 +127,8 @@ export const ProfileInputFields = () => {
             <Text className="text-white font-bold text-center">
               Simpan Perubahan
             </Text>
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={Quit}
             className="bg-pink text-center flex justify-center items-center py-2 rounded-lg w-max border-dark-green"
             style={{
@@ -133,7 +137,7 @@ export const ProfileInputFields = () => {
             }}
           >
             <Text className="text-white font-bold text-center">Keluar</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
       <Modal
@@ -195,7 +199,7 @@ export const ProfileInputFields = () => {
                   marginTop: 10,
                 }}
               >
-                <Pressable
+                <TouchableOpacity
                   className="flex w-max rounded-lg bg-pink"
                   onPress={CancelSave}
                   style={{
@@ -205,8 +209,8 @@ export const ProfileInputFields = () => {
                   }}
                 >
                   <Text className="text-creme font-bold text-base">Batal</Text>
-                </Pressable>
-                <Pressable
+                </TouchableOpacity>
+                <TouchableOpacity
                   className=" flex items-center rounded-lg justify-center w-max bg-dark-green"
                   onPress={ConfirmSave}
                   style={{
@@ -216,7 +220,7 @@ export const ProfileInputFields = () => {
                   }}
                 >
                   <Text className="text-creme font-bold text-base">Ubah</Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

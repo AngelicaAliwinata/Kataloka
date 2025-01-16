@@ -9,10 +9,10 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-
 import { AuthProvider } from "@/context/useAuth";
 import { TopBar } from "@/components/nav/home-topbar";
 import { Colors } from "@/constants/Colors";
+import { LoadingProvider } from "@/context/useLoading";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -35,23 +35,25 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor : "#000" }}>
-        <Stack>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(main)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="profile"
-            options={{
-              headerBackVisible: false,
-              header: () => <TopBar linkVisibility={false} />,
-            }}
-          />
-          <Stack.Screen
-            name="cerdas-bersama"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="+not-found" />
-        </Stack>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#000" }}>
+        <LoadingProvider>
+          <Stack>
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(main)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="profile"
+              options={{
+                headerBackVisible: false,
+                header: () => <TopBar linkVisibility={false} />,
+              }}
+            />
+            <Stack.Screen
+              name="cerdas-bersama"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </LoadingProvider>
       </SafeAreaView>
     </AuthProvider>
   );

@@ -1,5 +1,5 @@
 import { Href, Link } from "expo-router";
-import { Image, View, Text, Pressable } from "react-native";
+import { Image, View, Text, Pressable, TouchableOpacity } from "react-native";
 
 import Logo from "@/assets/images/kataloka-logo.svg";
 import { Colors } from "@/constants/Colors";
@@ -32,7 +32,7 @@ export const TopBar = ({
       </Link>
       <Text className="text-creme font-bold text-2xl mx-auto">Kataloka</Text>
       {linkVisibility ? (
-        <Pressable
+        <TouchableOpacity
           className="p-2.5 bg-creme rounded-md"
           style={{
             padding: 10,
@@ -49,7 +49,7 @@ export const TopBar = ({
               {linkTitle}
             </Text>
           </Link>
-        </Pressable>
+        </TouchableOpacity>
       ) : (
         <Text className="opacity-0">Hidden</Text>
       )}

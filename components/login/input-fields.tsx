@@ -1,19 +1,20 @@
 import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/context/useAuth";
+import { useLoading } from "@/context/useLoading";
 import { hexToRgba } from "@/utils/ColorHandler";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
-import { View, TextInput, Pressable, Text, Alert } from "react-native";
+import { View, TextInput, Text, Alert, TouchableOpacity } from "react-native";
 
 export const LoginInputFields = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
   const { login } = useAuth();
-
+  const { setLoading } = useLoading();
   async function Login() {
     const res = await login(email, password);
-
+    
     if (res.ok) {
       router.push("/");
       return;
@@ -111,12 +112,12 @@ export const LoginInputFields = () => {
         />
       </View>
 
-      <Pressable
+      <TouchableOpacity
         onPress={Login}
         style={{
           backgroundColor: Colors["dark-green"],
           display: "flex",
-          paddingVertical: 4  ,
+          paddingVertical: 4,
           borderRadius: 6,
           width: "auto",
           marginTop: 15,
@@ -132,7 +133,7 @@ export const LoginInputFields = () => {
         >
           Masuk
         </Text>
-      </Pressable>
+      </TouchableOpacity>
 
       <Text
         style={{
@@ -142,9 +143,14 @@ export const LoginInputFields = () => {
       >
         Belum Punya Akun?{" "}
         <Link href={"/(auth)/signup"}>
-          <Text className="font-bold" style={{
-            fontWeight : "700"
-          }}>Daftar</Text>
+          <Text
+            className="font-bold"
+            style={{
+              fontWeight: "700",
+            }}
+          >
+            Daftar
+          </Text>
         </Link>
       </Text>
     </View>

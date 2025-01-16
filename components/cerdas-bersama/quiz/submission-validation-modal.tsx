@@ -4,7 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Pressable,
   TextInput,
   Image,
 } from "react-native";
@@ -151,7 +150,7 @@ export const SubmissionModal = ({
                   transform: "translateY(20px)",
                 }}
               >
-                <Pressable
+                <TouchableOpacity
                   className=" flex items-center rounded-lg justify-center w-max bg-dark-green"
                   onPress={handleFinishViewingScore}
                   style={{
@@ -163,7 +162,7 @@ export const SubmissionModal = ({
                   <Text className="text-creme font-bold text-base w-full">
                     Selesai
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             ) : (
               <View
@@ -172,7 +171,7 @@ export const SubmissionModal = ({
                   transform: "translateY(30px)",
                 }}
               >
-                <Pressable
+                <TouchableOpacity
                   className="flex w-max rounded-lg bg-pink"
                   onPress={handleCloseModal}
                   style={{
@@ -182,8 +181,8 @@ export const SubmissionModal = ({
                   }}
                 >
                   <Text className="text-creme font-bold text-base">Batal</Text>
-                </Pressable>
-                <Pressable
+                </TouchableOpacity>
+                <TouchableOpacity
                   className=" flex items-center rounded-lg justify-center w-max bg-dark-green"
                   onPress={handleShowTotalScore}
                   style={{
@@ -195,7 +194,7 @@ export const SubmissionModal = ({
                   <Text className="text-creme font-bold text-base">
                     Selesai
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             )}
           </View>

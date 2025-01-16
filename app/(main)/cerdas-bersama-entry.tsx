@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   Modal,
   Image,
   Button,
-  Pressable,
 } from "react-native";
 import QuizMascot from "@/assets/images/cerdas-bersama/mascot-quiz.png";
 import { Colors } from "@/constants/Colors";
@@ -76,7 +75,7 @@ const HomeQuizScreen = () => {
         >
           Mulai Tes!
         </Text>
-        <Pressable
+        <TouchableOpacity
           className="rounded-lg"
           style={{
             paddingHorizontal: 52,
@@ -94,8 +93,8 @@ const HomeQuizScreen = () => {
           >
             Mulai
           </Text>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           className="rounded-lg"
           style={{
             paddingHorizontal: 52,
@@ -113,7 +112,7 @@ const HomeQuizScreen = () => {
           >
             Kembali
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       <ShowVideoWarningModal

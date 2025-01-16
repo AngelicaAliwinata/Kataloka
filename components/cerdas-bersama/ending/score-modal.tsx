@@ -4,7 +4,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Pressable,
+
   TextInput,
   Image,
 } from "react-native";
@@ -98,7 +98,7 @@ export const ShowScoreModal = ({
                 transform: "translateY(20px)",
               }}
             >
-              <Pressable
+              <TouchableOpacity
                 className=" flex items-center rounded-lg justify-center w-max bg-dark-green"
                 onPress={CloseModal}
                 style={{
@@ -110,7 +110,7 @@ export const ShowScoreModal = ({
                 <Text className="text-creme font-bold text-base w-full">
                   Selesai
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

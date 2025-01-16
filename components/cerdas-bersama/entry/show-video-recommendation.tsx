@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Text, View, Pressable, Image } from "react-native";
+import { Modal, Text, View, TouchableOpacity, Image } from "react-native";
 
 import Hat from "@/assets/images/cerdas-bersama/hat.png";
 import Flower from "@/assets/images/cerdas-bersama/flower.png";
@@ -125,7 +125,7 @@ export const ShowVideoWarningModal = ({
                   transform: "translateY(20px)",
                 }}
               >
-                <Pressable
+                <TouchableOpacity
                   className=" flex items-center rounded-lg justify-center w-max bg-dark-green"
                   onPress={handleFinishAllModal}
                   style={{
@@ -137,7 +137,7 @@ export const ShowVideoWarningModal = ({
                   <Text className="text-creme font-bold text-base w-full">
                     Kembali
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             ) : (
               <View
@@ -146,7 +146,7 @@ export const ShowVideoWarningModal = ({
                   transform: "translateY(30px)",
                 }}
               >
-                <Pressable
+                <TouchableOpacity
                   className="flex w-max rounded-lg bg-pink"
                   onPress={handleShowNextModal}
                   style={{
@@ -156,8 +156,8 @@ export const ShowVideoWarningModal = ({
                   }}
                 >
                   <Text className="text-creme font-bold text-base">Belum</Text>
-                </Pressable>
-                <Pressable
+                </TouchableOpacity>
+                <TouchableOpacity
                   className=" flex items-center rounded-lg justify-center w-max bg-dark-green"
                   onPress={handleCloseModal}
                   style={{
@@ -167,7 +167,7 @@ export const ShowVideoWarningModal = ({
                   }}
                 >
                   <Text className="text-creme font-bold text-base">Sudah</Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             )}
           </View>

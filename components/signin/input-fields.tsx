@@ -3,7 +3,14 @@ import { Colors } from "@/constants/Colors";
 import { axiosInstance } from "@/lib/axios-client";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { TextInput, View, Text, Pressable } from "react-native";
+import {
+  TextInput,
+  View,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 
 export const SigninInputFields = () => {
   const [fullName, setFullName] = useState("");
@@ -12,6 +19,7 @@ export const SigninInputFields = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   async function SignIn() {
+    console.log("TESTING");
     const res = await register({
       client: axiosInstance,
       body: { fullName, email, password },
@@ -19,6 +27,8 @@ export const SigninInputFields = () => {
 
     if (res.status === 201) {
       router.push("/login");
+    } else {
+      Alert.alert("Gagal Daftar", "Terjadi Kesalahan");
     }
   }
 
@@ -83,12 +93,12 @@ export const SigninInputFields = () => {
         />
       </View>
 
-      <Pressable
+      <TouchableOpacity
         onPress={SignIn}
         className="bg-dark-green  text-center flex justify-center items-center py-2 rounded-lg w-max"
       >
         <Text className="text-white font-bold text-center">Daftar</Text>
-      </Pressable>
+      </TouchableOpacity>
 
       <Text className="text-light-green text-center">
         Sudah Punya Akun?{" "}
