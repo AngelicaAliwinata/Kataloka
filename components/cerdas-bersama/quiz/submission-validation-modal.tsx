@@ -12,6 +12,8 @@ import Hat from "@/assets/images/cerdas-bersama/hat.png";
 import Flower from "@/assets/images/cerdas-bersama/flower.png";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
+import { updateUser, updateUserScore } from "@/app/api";
+import { authAxiosInstance } from "@/lib/axios-client";
 interface SubmissionModalProps {
   totalScore: number;
   maxScore: number;
@@ -29,18 +31,25 @@ export const SubmissionModal = ({
 
   const handleShowTotalScore = () => {
     setShowScore(true);
-};
+  };
 
   const handleCloseModal = () => {
     setModalVisible(false);
     setShowScore(false);
   };
 
-  const handleFinishViewingScore = () => {
-    setModalVisible(false);
-    setShowScore(false);
-    router.replace('/cerdas-bersama/ending');
-  }
+  const handleFinishViewingScore = async () => {
+    updateUserScore({
+      client: authAxiosInstance,
+      body: {
+        score: totalScore,
+      },
+    }).then(() => {
+      setModalVisible(false);
+      setShowScore(false);
+      router.replace("/cerdas-bersama/ending");
+    });
+  };
 
   return (
     <Modal visible={isModalVisible} transparent animationType="fade">
@@ -87,13 +96,15 @@ export const SubmissionModal = ({
               />
             )}
 
-            <View style={{
-              display : "flex",
-              flexDirection : "column", 
-              gap: showScore ? 0 : 10,
-              alignItems : "center",
-              marginTop: 20
-            }}>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: showScore ? 0 : 10,
+                alignItems: "center",
+                marginTop: 20,
+              }}
+            >
               <Text
                 className="text-center font-bold text-brown text-2xl"
                 style={{

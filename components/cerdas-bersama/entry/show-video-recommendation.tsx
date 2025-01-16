@@ -29,7 +29,7 @@ export const ShowVideoWarningModal = ({
   const handleFinishAllModal = () => {
     setModalVisible(false);
     setShowWarning(false);
-    router.replace("/cerdas-bersama/ending");
+    router.replace("/(main)/cerdas-bersama-entry");
   };
 
   return (
