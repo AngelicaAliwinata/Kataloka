@@ -39,16 +39,35 @@ export const SubmissionModal = ({
   };
 
   const handleFinishViewingScore = async () => {
-    updateUserScore({
+    const res = await updateUserScore({
       client: authAxiosInstance,
       body: {
         score: totalScore,
       },
-    }).then(() => {
-      setModalVisible(false);
-      setShowScore(false);
-      router.replace("/cerdas-bersama/ending");
     });
+    console.log("Score updated", res.error);
+
+    // @ts-expect-error - ignore
+    while (res.error.error.startsWith("Cannot perform I/O on behalf of a ")) {
+      console.log("Retrying update score");
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      const res = await updateUserScore({
+        client: authAxiosInstance,
+        body: {
+          score: totalScore,
+        },
+      });
+
+      console.log("Score updated", res.error);
+      if (!res.error) {
+        break;
+      }
+    }
+
+    setModalVisible(false);
+    setShowScore(false);
+    router.replace("/cerdas-bersama/ending");
   };
 
   return (

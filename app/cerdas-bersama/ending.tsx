@@ -16,23 +16,11 @@ import { authAxiosInstance } from "@/lib/axios-client";
 import { useAuth } from "@/context/useAuth";
 const EndingQuizScreen = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [score, setScore] = useState(0);
-  const [maxScore, setMaxScore] = useState(0);
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
     router.replace("/(auth)/login");
   }
-
-  useEffect(() => {
-    const score = getUserScore({
-      client: authAxiosInstance,
-    }).then((res) => {
-      console.log(res.data);
-      setScore(res.data?.score ?? 0);
-      setMaxScore(res.data?.totalScore ?? 0);
-    });
-  }, []);
 
   function startQuiz() {
     router.replace("/cerdas-bersama/quiz");
@@ -160,8 +148,6 @@ const EndingQuizScreen = () => {
         </TouchableOpacity>
       </View>
       <ShowScoreModal
-        totalScore={score ?? 0}
-        maxScore={maxScore ?? 0}
         isModalVisible={openModal}
         setModalVisible={setOpenModal}
       />

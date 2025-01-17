@@ -18,6 +18,7 @@ export interface AuthContextProps {
   isAuthenticated: boolean;
   user: User | null;
   refreshUser: () => Promise<void>;
+  refreshAuth: () => Promise<void>;
   getCookie: () => Promise<string | null>;
   login: (email: string, password: string) => Promise<loginResponse>;
   logout: () => void;
@@ -77,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return res;
   };
 
-  const logout = async () => {
+  const logout = async (redirect: boolean = true) => {
     setIsAuthenticated(false);
     setUser(null);
     AsyncStorage.clear();
@@ -91,7 +92,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     await credLogout({ client: authAxiosInstance });
-    router.replace("/(auth)/login");
+    if (redirect) router.replace("/(auth)/login");
   };
 
   const getCookie = async () => {
@@ -107,8 +108,42 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const refreshUser = async () => {
+    console.log("refreshing user");
     const userData = await self({ client: authAxiosInstance });
-    setUser(userData.data ?? null);
+    if (userData.status === 401) {
+      console.log("User not authenticated");
+      await logout(false);
+      return;
+    }
+    if (userData.data) {
+      console.log("User data refreshed", userData.data);
+      setUser(userData.data);
+    } else {
+      console.log("User refresh failed",userData.error);
+      setTimeout(async () => {
+        await refreshUser();
+      }, 3000);
+    }
+  };
+
+  const refreshAuth = async () => {
+    const cookie = await getCookie();
+    const headers = axiosInstance.getConfig().headers;
+    if (headers && (headers as Record<string, any>)["Cookie"] === cookie) {
+      return;
+    }
+
+    console.log("refreshing cookie", cookie);
+    if (cookie) {
+      authAxiosInstance.setConfig({
+        withCredentials: true,
+        headers: {
+          Cookie: cookie,
+        },
+      });
+      setIsAuthenticated(true);
+      await refreshUser();
+    }
   };
 
   return (
@@ -117,6 +152,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated,
         user,
         refreshUser,
+        refreshAuth,
         getCookie,
         login,
         logout,

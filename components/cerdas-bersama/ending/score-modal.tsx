@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Modal,
   Text,
   View,
   TouchableOpacity,
-
   TextInput,
   Image,
 } from "react-native";
@@ -13,22 +12,53 @@ import Hat from "@/assets/images/cerdas-bersama/hat.png";
 import Flower from "@/assets/images/cerdas-bersama/flower.png";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
+import { getUserScore } from "@/app/api";
+import { authAxiosInstance } from "@/lib/axios-client";
 interface SubmissionModalProps {
-  totalScore: number;
-  maxScore: number;
   isModalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
 }
 
 export const ShowScoreModal = ({
-  totalScore,
   isModalVisible,
   setModalVisible,
-  maxScore,
 }: SubmissionModalProps) => {
+  const [totalScore, setScore] = useState(0);
+  const [maxScore, setMaxScore] = useState(0);
+
   const CloseModal = () => {
     setModalVisible(false);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("Getting user score");
+      const fetchScore = async () => {
+        try {
+          const res = await getUserScore({
+            client: authAxiosInstance,
+          });
+
+          if (res.error) {
+            console.log(res.error);
+            setTimeout(fetchScore, 3000); // Retry after 3 seconds
+            return;
+          }
+
+          console.log(res.data);
+          setScore(res.data?.score ?? 0);
+          setMaxScore(res.data?.totalScore ?? 0);
+        } catch (error) {
+          console.log(error);
+          setTimeout(fetchScore, 3000); // Retry after 3 seconds
+        }
+      };
+
+      fetchScore();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Modal visible={isModalVisible} transparent animationType="fade">

@@ -44,27 +44,33 @@ export const ProfileInputFields = () => {
   }
 
   async function ConfirmSave() {
-    const res = await updateUser({
-      client: authAxiosInstance,
-      body: {
-        email: user?.email ?? "",
-        fullName: fullname,
-        password: password === "" ? undefined : password,
-        currentPassword: password === "" ? undefined : passwordConfirm,
-      },
-    });
+    try {
+      const res = await updateUser({
+        client: authAxiosInstance,
+        body: {
+          email: user?.email ?? "",
+          fullName: fullname,
+          password: password === "" ? undefined : password,
+          currentPassword: password === "" ? undefined : passwordConfirm,
+        },
+      });
 
-    if (res.data) {
-      Alert.alert("Perubahan Berhasil", "Data berhasil disimpan");
-      await refreshUser();
-    }
+      if (res.data) {
+        Alert.alert("Perubahan Berhasil", "Data berhasil disimpan");
+        setTimeout(async () => {
+          await refreshUser();
+        }, 3000);
+      }
 
-    if (res.error) {
-      Alert.alert(
-        "Perubahan Gagal",
-        // @ts-ignore
-        res.error ? res.error : "Terjadi kesalahan"
-      );
+      if (res.error) {
+        Alert.alert(
+          "Perubahan Gagal",
+          // @ts-ignore
+          res.error ? (res.error.error.startsWith("") ? "Mohon ulang aksi anda!" : res.error.error) : "Terjadi kesalahan"
+        );
+      }
+    } catch (error) {
+      Alert.alert("Perubahan Gagal", "Terjadi kesalahan");
     }
 
     setPassword("");

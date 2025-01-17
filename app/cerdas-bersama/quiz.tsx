@@ -100,7 +100,7 @@ const QuizScreen = () => {
   const maxLength = data ? data.length : 0;
   const definedData = data ?? [];
 
-  if (!isLoading) {
+  if (!isLoading && (data?.length ?? 0) > 0) {
     return (
       <ScrollView
         style={{
