@@ -13,6 +13,11 @@ import { Colors } from "@/constants/Colors";
 export default function HomeScreen() {
   const { user, logout, isAuthenticated } = useAuth();
   const router = useRouter();
+  const { refreshAuth } = useAuth();
+
+  useEffect(() => {
+    refreshAuth();
+  }, []);
 
   return (
     <ScrollView
