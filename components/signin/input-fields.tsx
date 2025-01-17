@@ -26,6 +26,7 @@ export const SigninInputFields = () => {
       body: { fullName, email, password },
     });
 
+
     if (res.status === 201) {
       setLoading(false);
       router.push("/login");

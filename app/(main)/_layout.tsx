@@ -81,7 +81,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="ruang-belajar"
+        name="ruang-belajar-entry"
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (

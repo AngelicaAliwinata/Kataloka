@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView } from "react-native";
 
 import { Link, useRouter } from "expo-router";
 import { OptionCard } from "../../components/homepage/card";
@@ -15,20 +15,20 @@ export default function HomeScreen() {
   const router = useRouter();
 
   return (
-    <View
+    <ScrollView
       className="w-full h-full bg-creme"
       style={{
         paddingHorizontal: 40,
-        paddingTop: 20
+        paddingTop: 20,
       }}
     >
       <Text
         className="flex flex-col text-center gap-1 text-brown font-bold text-2xl"
         style={{
-          fontSize: 28,
+          fontSize: 26,
           fontWeight: 700,
           lineHeight: 42,
-          paddingBottom : 10
+          paddingBottom: 10,
         }}
       >
         Selamat Datang di Kataloka
@@ -36,14 +36,18 @@ export default function HomeScreen() {
           `, ${handleShorteningText(user?.fullName ?? "", 15)}`}
         !
       </Text>
-      <Text style={{
-        fontSize : 18,
-        lineHeight: 24,
-        fontWeight : "400",
-        color : Colors.brown,
-        paddingBottom : 16,
-        textAlign : "center"
-      }}>Pilih salah satu metode pembelajaran!</Text>
+      <Text
+        style={{
+          fontSize: 16,
+          lineHeight: 24,
+          fontWeight: "400",
+          color: Colors.brown,
+          paddingBottom: 16,
+          textAlign: "center",
+        }}
+      >
+        Pilih salah satu metode pembelajaran!
+      </Text>
 
       <View className="flex flex-col gap-5">
         <OptionCard
@@ -66,7 +70,7 @@ export default function HomeScreen() {
           description={
             "Tempat belajar interaktif yang menyediakan video pembelajaran"
           }
-          link={"/(main)/ruang-belajar"}
+          link={"/(main)/ruang-belajar-entry"}
         />
         <OptionCard
           image={{
@@ -79,6 +83,6 @@ export default function HomeScreen() {
           link={"/(main)/cerdas-bersama-entry"}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }

@@ -48,9 +48,14 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
+              name="ruang-belajar"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
               name="cerdas-bersama"
               options={{ headerShown: false }}
             />
+
             <Stack.Screen name="+not-found" />
           </Stack>
         </LoadingProvider>

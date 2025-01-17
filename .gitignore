@@ -78,5 +78,3 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
-
-app/api/
