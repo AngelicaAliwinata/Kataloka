@@ -1,62 +1,29 @@
 import { StudyCard } from "@/components/ruang-belajar/card";
-import { VideoFrame, VideoFrameProps } from "@/components/ruang-belajar/video-frame";
-import { useLocalSearchParams } from "expo-router";
-import { ScrollView, View, Text } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import {
+  VideoFrame,
+  VideoFrameProps,
+} from "@/components/ruang-belajar/video-frame";
+import { Colors } from "@/constants/Colors";
+import { router, useLocalSearchParams } from "expo-router";
+import { ScrollView, View, Text, TouchableOpacity } from "react-native";
 
 
-
-const data : VideoFrameProps[]= [
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "unwatched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "watched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "unwatched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "watched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "unwatched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "watched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "unwatched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "watched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "unwatched",
-  },
-  {
-    videoUrl: "https://www.youtube.com/watch?v=K7hU_z9X4Kk",
-    status: "watched",
-  },
-];
 const DetailRuangBelajar = () => {
-  const {name} = useLocalSearchParams();
+  const {name, videoUrls} = useLocalSearchParams();
+  
+  const selectedVideo = Array.isArray(videoUrls) ? videoUrls : [videoUrls].filter(Boolean);
 
+  function TesPemahaman(){
+    router.navigate("/cerdas-bersama-entry")
+  }
+  
   return (
     <ScrollView
       className="w-full h-full bg-creme"
       style={{
-        paddingHorizontal: 40,
+        paddingHorizontal: 20,
         paddingTop: 20,
+        
       }}
     >
       <Text
@@ -87,18 +54,41 @@ const DetailRuangBelajar = () => {
         style={{
           display: "flex",
           flexWrap: "wrap",
+          alignItems: "center",
           flexDirection: "row",
+          gap: 10,
           justifyContent: "space-around",
-          gap: 15,
           marginBottom: 50,
+          flexShrink: 1,
         }}
       >
-        {data.map((cardData, index) => {
+        {selectedVideo.map((video, index) => {
           return (
-            <VideoFrame videoUrl={cardData.videoUrl} status={cardData.status} />
+            <VideoFrame
+              videoUrl={video}
+              key={index}
+            />
           );
         })}
       </View>
+      <TouchableOpacity
+        style={{
+          backgroundColor: Colors["dark-green"],
+          width: "100%",
+          paddingVertical: 12,
+          marginBottom : 60,
+          borderRadius : 8
+        }}
+        onPress={TesPemahaman}
+      >
+        <Text style={{
+          textAlign : "center",
+          color : Colors.beige,
+          fontWeight : 600,
+          fontSize : 16,
+          lineHeight: 24,
+        }}>Tes Pemahamanmu</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

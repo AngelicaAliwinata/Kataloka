@@ -49,11 +49,32 @@ export default function RootLayout() {
             />
             <Stack.Screen
               name="ruang-belajar"
-              options={{ headerShown: false }}
+              options={{
+                header: () => (
+                  <TopBar
+                    linkTitle="Profile"
+                    linkVisibility={true}
+                    linkHref={"/profile"}
+                  />
+                ),
+              }}
             />
             <Stack.Screen
               name="cerdas-bersama"
               options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="katapedia"
+              options={{
+                header: () => (
+                  <TopBar
+                    linkTitle="Profile"
+                    linkVisibility={true}
+                    linkHref={"/profile"}
+                  />
+                ),
+              }}
             />
 
             <Stack.Screen name="+not-found" />

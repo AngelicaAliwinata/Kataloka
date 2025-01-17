@@ -1,10 +1,10 @@
 import { View, Text, ScrollView } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { KatapediaCard } from "@/components/katapedia/card";
+import { KatapediaData } from "@/static/katapedia";
 
-import { StudyCard } from "@/components/ruang-belajar/card";
-import { RuangBelajarData } from "@/static/ruang-belajar";
 
-const RuangBelajarScreen = () => {
+const KatapediaScreen = () => {
   return (
     <ScrollView
       className="w-full h-full bg-creme"
@@ -22,7 +22,7 @@ const RuangBelajarScreen = () => {
           paddingBottom: 10,
         }}
       >
-        Ruang Belajar
+        Katapedia
       </Text>
       <Text
         style={{
@@ -34,7 +34,7 @@ const RuangBelajarScreen = () => {
           textAlign: "center",
         }}
       >
-        Pilih salah satu pembelajaran di bawah!
+        Pilih salah satu kartu di bawah
       </Text>
 
       <View
@@ -47,13 +47,14 @@ const RuangBelajarScreen = () => {
           marginBottom: 50,
         }}
       >
-        {RuangBelajarData.map((cardData, index) => {
+        {KatapediaData.map((cardData, index) => {
           return (
-            <StudyCard
+            <KatapediaCard
               key={index}
-              image={cardData.image}
               name={cardData.name}
-              videoUrls={cardData.videoUrls}
+              
+              definition={cardData.definition}
+              fact={cardData.fact}
             />
           );
         })}
@@ -62,4 +63,4 @@ const RuangBelajarScreen = () => {
   );
 };
 
-export default RuangBelajarScreen;
+export default KatapediaScreen;

@@ -1,40 +1,58 @@
+import { Colors } from "@/constants/Colors";
+import { hexToRgba } from "@/utils/ColorHandler";
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-
-import YouTube, { YouTubeStandaloneAndroid } from 'react-native-youtube'; 
+import { View, TouchableOpacity, Text } from "react-native";
+import YoutubeIframe from "react-native-youtube-iframe";
 
 export interface VideoFrameProps {
   videoUrl: string;
-  status: "watched" | "unwatched";
 }
 
-export const VideoFrame = ({
-  videoUrl,
-  status = "unwatched",
-}: VideoFrameProps) => {
-  const [watched, setWatched] = useState(status === "watched");
-  const videoId = videoUrl.split('v=')[1]; 
+export const VideoFrame = ({ videoUrl }: VideoFrameProps) => {
+  
+  const [playing, setPlaying] = useState(false);
+  const videoId = videoUrl.split("v=")[1]?.split("&")[0]; 
 
-  const onStart = () => {
-    setWatched(true);
+  const onPlay = () => {
+    setPlaying(true);
+    
+  };
+
+  const onPause = () => {
+    setPlaying(false);
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <TouchableOpacity
-        style={{
-          width: 178,
-          height: 170,
-          borderRadius: 10,
-          padding: 16,
-          overflow: "hidden",
-          position: "relative",
-          opacity: watched ? 0.7 : 1, // Conditionally set opacity
+    <TouchableOpacity
+      style={{
+        width: 160,
+        height: 160,
+        borderRadius: 10,
+        padding: 16,
+        overflow: "hidden",
+        position: "relative",
+        opacity: 1,
+        backgroundColor: Colors.beige,
+        borderColor: hexToRgba(Colors["dark-green"], 0.25),
+        elevation: 2,
+        alignItems: "center",
+      }}
+    >
+      <YoutubeIframe
+        videoId={videoId}
+        play={playing}
+        onChangeState={(event) => {
+          if (event === "playing") onPlay();
+          if (event === "paused") onPause();
         }}
-        onPress={() => setWatched(!watched)} // Toggle watched state
-      >
-        {/* <YouTube apiKey={process.env.EXPO_PUBLIC_YOUTUBE_API_KEY} onReady={onStart} videoId={videoId}></YouTube> */}
-      </TouchableOpacity>
-    </View>
+        height={146}
+        width={146}
+        webViewStyle={{
+          width: 146,
+          height: 146,
+          aspectRatio: 1,
+        }}
+      />
+    </TouchableOpacity>
   );
 };

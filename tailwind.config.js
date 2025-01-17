@@ -13,7 +13,7 @@ module.exports = {
         brown: "#543B2F",
         "red-pink": "#F8D7DA",
         beige: "#FFFBED",
-        
+        "gray" : "#333333"
       },
     },
   },

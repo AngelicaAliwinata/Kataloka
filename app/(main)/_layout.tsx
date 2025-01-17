@@ -56,7 +56,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="katapedia"
+        name="katapedia-entry"
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (

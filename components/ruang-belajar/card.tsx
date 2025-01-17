@@ -1,16 +1,14 @@
-import { Colors } from "@/constants/Colors";
-import { hexToRgba } from "@/utils/ColorHandler";
-import { useNavigation, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import {
   Image,
   ImageSourcePropType,
-  View,
   Text,
   TouchableOpacity,
 } from "react-native";
 
 interface StudyCardProps {
   image: ImageSourcePropType;
+  videoUrls: string[];
   name: string;
 }
 
@@ -18,9 +16,10 @@ export const StudyCard = (props: StudyCardProps) => {
   const router = useRouter();
   function onPressed() {
     router.push({
-      pathname: "/detail-belajar",
+      pathname: "/ruang-belajar/detail-belajar",
       params: {
         name: props.name,
+        videoUrls: props.videoUrls,
       },
     });
   }
