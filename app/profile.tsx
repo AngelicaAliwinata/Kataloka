@@ -2,13 +2,18 @@ import { View } from "react-native";
 import { ProfileInputFields } from "../components/profile/input-fields";
 import { useAuth } from "@/context/useAuth";
 import { router } from "expo-router";
+import { useEffect } from "react";
 
 const ProfileScreen = () => {
   const { isAuthenticated, user, logout } = useAuth();
 
-  if (!isAuthenticated) {
-    router.replace("/(auth)/login");
-  }
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.dismissAll();
+      router.replace("/(auth)/login");
+    }
+  },[])
+
 
   return (
     <View

@@ -1,4 +1,4 @@
-import { Href, Link } from "expo-router";
+import { Href, Link, router } from "expo-router";
 import { Image, View, Text, Pressable, TouchableOpacity } from "react-native";
 
 import Logo from "@/assets/images/kataloka-logo.svg";
@@ -14,6 +14,10 @@ export const TopBar = ({
   linkHref,
   linkVisibility = true,
 }: Props) => {
+  function ReturnToHomepage() {
+    router.push("/");
+  }
+
   return (
     <View
       className="flex flex-row justify-between w-full items-center p-4 bg-light-green"
@@ -27,9 +31,10 @@ export const TopBar = ({
         backgroundColor: Colors["light-green"],
       }}
     >
-      <Link href={"/(main)/"}>
+      <TouchableOpacity onPress={ReturnToHomepage}>
         <Logo width={43} height={40} aria-label="Kataloka Logo" />
-      </Link>
+      </TouchableOpacity>
+
       <Text className="text-creme font-bold text-2xl mx-auto">Kataloka</Text>
       {linkVisibility ? (
         <TouchableOpacity

@@ -13,8 +13,7 @@ import KatapediaIcon from "@/assets/images/bottom-bar/katapedia.png";
 import { TopBar } from "@/components/nav/home-topbar";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+  
   return (
     <Tabs
       screenOptions={{

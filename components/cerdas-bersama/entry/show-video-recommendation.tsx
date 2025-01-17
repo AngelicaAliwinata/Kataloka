@@ -135,7 +135,7 @@ export const ShowVideoWarningModal = ({
                   }}
                 >
                   <Text className="text-creme font-bold text-base w-full">
-                    Kembali
+                    Tonton Video
                   </Text>
                 </TouchableOpacity>
               </View>

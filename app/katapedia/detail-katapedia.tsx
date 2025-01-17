@@ -57,7 +57,7 @@ const DetailKatapedia = () => {
         >
           <Text
             style={{
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: 24,
               lineHeight: 36,
               textAlign: "center",
@@ -84,7 +84,7 @@ const DetailKatapedia = () => {
           ></View>
           <Text
             style={{
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: 24,
               lineHeight: 36,
               textAlign: "center",
@@ -111,7 +111,7 @@ const DetailKatapedia = () => {
           ></View>
           <Text
             style={{
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: 24,
               lineHeight: 36,
               textAlign: "center",

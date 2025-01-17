@@ -23,12 +23,14 @@ export const ProfileInputFields = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      logout();
+    }
+  }, []);
+
   function onChangePassword(text: string) {
     setPassword(text);
-  }
-
-  if (!isAuthenticated) {
-    logout();
   }
 
   function SaveData() {
@@ -66,7 +68,7 @@ export const ProfileInputFields = () => {
         Alert.alert(
           "Perubahan Gagal",
           // @ts-ignore
-          res.error ? (res.error.error.startsWith("") ? "Mohon ulang aksi anda!" : res.error.error) : "Terjadi kesalahan"
+          res.error ? res.error : "Mohon Periksa Koneksi Anda"
         );
       }
     } catch (error) {

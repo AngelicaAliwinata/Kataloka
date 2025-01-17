@@ -3,7 +3,6 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { KatapediaCard } from "@/components/katapedia/card";
 import { KatapediaData } from "@/static/katapedia";
 
-
 const KatapediaScreen = () => {
   return (
     <ScrollView
@@ -52,9 +51,10 @@ const KatapediaScreen = () => {
             <KatapediaCard
               key={index}
               name={cardData.name}
-              
               definition={cardData.definition}
-              fact={cardData.fact}
+              fact={cardData.fact ?? ""}
+              category={cardData.category}
+              spelling={cardData.spelling}
             />
           );
         })}

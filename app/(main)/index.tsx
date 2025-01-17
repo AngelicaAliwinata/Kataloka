@@ -11,8 +11,7 @@ import { useEffect } from "react";
 import { Colors } from "@/constants/Colors";
 
 export default function HomeScreen() {
-  const { user, logout, isAuthenticated } = useAuth();
-  const router = useRouter();
+  const { user, isAuthenticated } = useAuth();
   const { refreshAuth } = useAuth();
 
   useEffect(() => {
@@ -54,7 +53,9 @@ export default function HomeScreen() {
         Pilih salah satu metode pembelajaran!
       </Text>
 
-      <View className="flex flex-col gap-5">
+      <View className="flex flex-col gap-5 " style={{
+        marginBottom : 40
+      }}>
         <OptionCard
           image={{
             model: KatapediaMascot,
@@ -63,7 +64,7 @@ export default function HomeScreen() {
           }}
           title={"Katapedia"}
           description={"Menjelajahi kosakata sehari-hari dengan Katapedia"}
-          link={"/(main)/katapedia"}
+          link={"/(main)/katapedia-entry"}
         />
         <OptionCard
           image={{

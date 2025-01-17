@@ -16,7 +16,7 @@ export const RuangBelajarData = [
       "https://www.youtube.com/watch?v=bgA5EgM-B9U&list=PL9AOTUu5bRu2ZEqNPn1Pp6LsL5jFedWHd&index=6",
       "https://www.youtube.com/watch?v=jdLuv8clJiQ&list=PL9AOTUu5bRu2ZEqNPn1Pp6LsL5jFedWHd&index=7",
     ],
-    image : Ejaan,
+    image: Ejaan,
   },
   {
     name: "Tata Kata",
@@ -26,7 +26,7 @@ export const RuangBelajarData = [
       "https://www.youtube.com/watch?v=2Rbsl7LWhZU&list=PL9AOTUu5bRu30PnYA6uFs4n7kr4cgemJq&index=3",
       "https://www.youtube.com/watch?v=CLKdmfFtlAY&list=PL9AOTUu5bRu30PnYA6uFs4n7kr4cgemJq&index=4",
     ],
-    image : TataKata
+    image: TataKata,
   },
   {
     name: "Tata Kalimat",
@@ -38,7 +38,7 @@ export const RuangBelajarData = [
       "https://www.youtube.com/watch?v=DY75Um_sD14&list=PL9AOTUu5bRu2-MU_pwEw0NnSwY2IIYJWh&index=5",
       "https://www.youtube.com/watch?v=8VWFkKqNGcA&list=PL9AOTUu5bRu2-MU_pwEw0NnSwY2IIYJWh&index=6",
     ],
-    image : TataKalimat
+    image: TataKalimat,
   },
   {
     name: "Paragraf",
@@ -49,7 +49,7 @@ export const RuangBelajarData = [
       "https://www.youtube.com/watch?v=54bJF8sZSbc&list=PL9AOTUu5bRu3Ptar0ikA1A3s1eN8U9LoN&index=4",
       "https://www.youtube.com/watch?v=SPhRq5msUFs&list=PL9AOTUu5bRu3Ptar0ikA1A3s1eN8U9LoN&index=5",
     ],
-    image : Paragraph
+    image: Paragraph,
   },
   {
     name: "TTKI (1)",
@@ -58,7 +58,7 @@ export const RuangBelajarData = [
       "https://www.youtube.com/watch?v=LiVblsdBhcI&list=PL9AOTUu5bRu27OjbfAjZQk8daUkZNlN84&index=2",
       "https://www.youtube.com/watch?v=4VN2DbVT4Ao&list=PL9AOTUu5bRu27OjbfAjZQk8daUkZNlN84&index=3",
     ],
-    image : Ttki1
+    image: Ttki1,
   },
   {
     name: "TTKI (2)",
@@ -68,6 +68,6 @@ export const RuangBelajarData = [
       "https://www.youtube.com/watch?v=5hcleKYEhYo&list=PL9AOTUu5bRu33s9be8GxuM80EYCQXx50W&index=3",
       "https://www.youtube.com/watch?v=brojTczcHdI&list=PL9AOTUu5bRu33s9be8GxuM80EYCQXx50W&index=4",
     ],
-    image : Ttki2
+    image: Ttki2,
   },
 ];
