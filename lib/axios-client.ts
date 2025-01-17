@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createClient, createConfig } from "@hey-api/client-axios";
 
 const axiosInstance = createClient(
