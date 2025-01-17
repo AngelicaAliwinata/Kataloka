@@ -68,7 +68,7 @@ export const ProfileInputFields = () => {
         Alert.alert(
           "Perubahan Gagal",
           // @ts-ignore
-          res.error ? res.error : "Mohon Periksa Koneksi Anda"
+          res.error ? (res.error.error.startsWith("Cannot perform I/O on behalf of a different request.") ? "Mohon ulang aksi anda!" : res.error.error) : "Terjadi kesalahan"
         );
       }
     } catch (error) {
