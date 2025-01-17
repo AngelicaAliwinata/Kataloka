@@ -28,6 +28,13 @@ export type ValidationError = {
     };
 };
 
+export type Video = {
+    id: string;
+    title: string;
+    videoUrl: string;
+    watched?: boolean;
+};
+
 export type GetHealthStatusResponse = ({
     message?: string;
 });
@@ -98,3 +105,13 @@ export type GetUserScoreError = ((GenericError | ValidationError) | GenericError
 export type GetQuizResponse = (Array<Quiz>);
 
 export type GetQuizError = (GenericError);
+
+export type GetVideoData = {
+    query: {
+        title: string;
+    };
+};
+
+export type GetVideoResponse = (Array<Video>);
+
+export type GetVideoError = (GenericError);
